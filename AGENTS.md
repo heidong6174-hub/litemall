@@ -38,10 +38,27 @@ litemall - 又一个小商场系统。全栈电商项目，包含管理后台、
 
 ## 运行与预览
 
-- 当前沙箱环境仅有 Node.js 24，无 Java/Maven/MySQL
+- 沙箱环境默认仅有 Node.js 24；Java/Maven/MySQL 可通过 apt-get 安装
 - 前端子项目（litemall-admin、litemall-vue）可独立安装依赖并启动开发服务器
-- 后端服务需要 MySQL + JDK 环境，当前环境不可用
+- 后端服务需要 MySQL + JDK 环境，已验证可通过 apt-get 安装并运行
 - 前端开发服务器默认端口需代理到后端 API（见各 .env.development 配置）
+
+### 后端部署
+
+- MySQL 8.0 通过 `apt-get install mysql-server` 安装，`service mysql start` 启动
+- JDK 通过 `apt-get install default-jdk maven` 安装（实际为 OpenJDK 21，向下兼容 JDK 1.8）
+- 数据库初始化：依次执行 `litemall-db/sql/` 下的 `litemall_schema.sql`、`litemall_table.sql`、`litemall_data.sql`
+- 数据库连接：`litemall` / `litemall123456`（见 `litemall-db/src/main/resources/application-db.yml`）
+- Maven 构建：`mvn clean package -DskipTests`，产物为 `litemall-all/target/litemall-all-0.1.0-exec.jar`
+- 前端构建需在 Maven 打包前完成（`pnpm run build`），产物复制到 JAR 的 `static/` 目录
+- 启动命令：`java -Dserver.port=5000 -jar litemall-all/target/litemall-all-0.1.0-exec.jar`
+- 管理员账号：`admin123` / `admin123`
+
+### 前端构建注意事项
+
+- litemall-admin 使用 pnpm 时存在依赖提升问题，需额外安装 `vue-loader@15`（Vue 2 兼容版本）和 `qs`
+- `svg-baker-runtime` 已作为 `svg-sprite-loader` 的依赖安装，但 pnpm 严格模式下可能需要显式安装
+- 构建命令：`pnpm run build`（production）或 `pnpm run build:dep`（deployment）
 
 ### 预览链路
 
@@ -49,7 +66,7 @@ litemall - 又一个小商场系统。全栈电商项目，包含管理后台、
 - 预览入口：litemall-admin（Vue 2 + Element UI 管理后台）
 - 预览脚本：`scripts/coze-preview-build.sh`（安装依赖）、`scripts/coze-preview-run.sh`（启动 dev server）
 - 根 `.coze` 的 `[dev]` 调用上述脚本，脚本内部 cd 到 `litemall-admin/` 执行
-- 预览服务绑定 `0.0.0.0:5000`，后端 API 代理不可用（无 Java 环境），页面可展示但接口报错
+- 预览服务绑定 `0.0.0.0:5000`；若后端同时运行需占用 5000 端口，则前端 dev server 需改用其他端口
 - vue-cli-service 4.4.4 支持 `--host` 和 `--port` 参数透传
 
 ### 部署链路
