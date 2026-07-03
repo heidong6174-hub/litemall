@@ -69,6 +69,25 @@ litemall - 又一个小商场系统。全栈电商项目，包含管理后台、
 - 预览服务绑定 `0.0.0.0:5000`；若后端同时运行需占用 5000 端口，则前端 dev server 需改用其他端口
 - vue-cli-service 4.4.4 支持 `--host` 和 `--port` 参数透传
 
+### 环境重置后快速恢复
+
+环境重置是平台行为，无法阻止。重置后运行以下脚本可一键恢复所有服务：
+
+```bash
+bash /workspace/projects/scripts/restore-services.sh
+```
+
+该脚本会：
+1. 检查并安装 Java、Maven、MySQL（如未安装）
+2. 启动 MySQL 并初始化数据库（如未初始化）
+3. 启动后端 Java 服务（端口 8080）
+4. 启动前端 dev server（端口 5000）
+
+**服务架构**：
+- 前端 dev server（5000 端口）提供页面，通过代理将 `/admin` API 请求转发到后端（8080 端口）
+- 后端 Java 服务（8080 端口）提供 API 和数据库访问
+- MySQL 数据库存储业务数据
+
 ### 部署链路
 
 - 部署类型：service / web
