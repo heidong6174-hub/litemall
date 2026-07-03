@@ -4,7 +4,7 @@ set -euo pipefail
 # 基于脚本位置定位工作区根目录（scripts/ 的上一级）
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-cd "$PROJECT_DIR/litemall-admin"
+cd "$PROJECT_DIR/litemall-vue"
 
 # 显式声明关键环境变量，不依赖平台执行环境继承
 export PORT=5000
@@ -13,4 +13,4 @@ export PORT=5000
 fuser -k 5000/tcp 2>/dev/null || true
 sleep 1
 
-exec pnpm run dev -- --host 0.0.0.0 --port 5000
+exec npx vue-cli-service serve --host=0.0.0.0 --port=5000

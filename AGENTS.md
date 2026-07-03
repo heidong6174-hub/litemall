@@ -63,11 +63,12 @@ litemall - 又一个小商场系统。全栈电商项目，包含管理后台、
 ### 预览链路
 
 - 项目被判定为 Web 预览型项目（存在 Vue 管理后台和移动端前端）
-- 预览入口：litemall-admin（Vue 2 + Element UI 管理后台）
+- 预览入口：litemall-vue（Vue 2 + Vant 移动端商城）
 - 预览脚本：`scripts/coze-preview-build.sh`（安装依赖）、`scripts/coze-preview-run.sh`（启动 dev server）
-- 根 `.coze` 的 `[dev]` 调用上述脚本，脚本内部 cd 到 `litemall-admin/` 执行
-- 预览服务绑定 `0.0.0.0:5000`；若后端同时运行需占用 5000 端口，则前端 dev server 需改用其他端口
-- vue-cli-service 4.4.4 支持 `--host` 和 `--port` 参数透传
+- 根 `.coze` 的 `[dev]` 调用上述脚本，脚本内部 cd 到 `litemall-vue/` 执行
+- 预览服务绑定 `0.0.0.0:5000`；后端运行在 8080 端口，前端通过代理转发 `/wx` 请求到后端
+- litemall-vue 使用 pnpm 时需额外安装 `babel-loader@8`、`cache-loader`、`css-loader@3`、`postcss-loader@4`、`url-loader`、`vue-loader@15`、`vue-style-loader`、`core-js@2`、`regenerator-runtime`
+- vue-cli-service 3.12.1 支持 `--host` 和 `--port` 参数透传
 
 ### 环境重置后快速恢复
 
