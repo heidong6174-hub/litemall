@@ -3,6 +3,7 @@ sub_id = "aaf7ae85"
 name = "litemall"
 requires = ["nodejs-24", "java-17"]
 project_type = "web"
+entrypoint = "litemall-all/target/litemall-all-0.1.0-exec.jar"
 
 [preview]
 preview_enable = "enabled"
