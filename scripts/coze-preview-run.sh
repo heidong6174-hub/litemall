@@ -4,7 +4,7 @@ set -euo pipefail
 # 基于脚本位置定位工作区根目录（scripts/ 的上一级）
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-cd "$PROJECT_DIR/litemall-vue"
+cd "$PROJECT_DIR/litemall-admin"
 
 # 显式声明关键环境变量，不依赖平台执行环境继承
 export PORT=5000
